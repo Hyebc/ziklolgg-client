@@ -11,28 +11,34 @@ function Search() {
   const [message, setMessage] = useState('');
 
   const handleSearch = async () => {
-    if (!nickname.trim()) {
-      setMessage('닉네임을 입력해주세요.');
-      return;
+  if (!nickname.trim()) {
+    setMessage('닉네임을 입력해주세요.');
+    return;
+  }
+
+  try {
+    const res = await axios.get(`/api/match/player/${nickname.trim()}`);
+    const rawData = res.data;
+    const safeData = Array.isArray(rawData) ? rawData : rawData?.data || [];
+
+    if (!Array.isArray(safeData)) {
+      throw new Error('응답 데이터가 배열이 아닙니다.');
     }
 
-    try {
-      const res = await axios.get(`/api/match/player/${nickname.trim()}`);
-      const data = res.data;
+    setRecords(safeData);
+    setFilteredRecords(safeData);
+    setMessage('');
 
-      setRecords(data);
-      setFilteredRecords(data);
-      setMessage('');
+    const champList = [...new Set(safeData.map((r) => r.champion))];
+    setChampions(champList);
+    setSelectedChampion('');
+    setChampSummary(summarizeByChampion(safeData));
+  } catch (error) {
+    console.error('검색 오류:', error);
+    setMessage('검색 실패. 서버 오류 또는 해당 소환사가 없습니다.');
+  }
+};
 
-      const champList = [...new Set(data.map((r) => r.champion))];
-      setChampions(champList);
-      setSelectedChampion('');
-      setChampSummary(summarizeByChampion(data));
-    } catch (error) {
-      console.error(error);
-      setMessage('검색 실패. 서버 오류 또는 해당 소환사가 없습니다.');
-    }
-  };
 
   const summarizeByChampion = (data) => {
   const map = {};
