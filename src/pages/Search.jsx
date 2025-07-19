@@ -21,10 +21,6 @@ function Search() {
     const rawData = res.data;
     const safeData = Array.isArray(rawData) ? rawData : rawData?.data || [];
 
-    if (!Array.isArray(safeData)) {
-      throw new Error('응답 데이터가 배열이 아닙니다.');
-    }
-
     setRecords(safeData);
     setFilteredRecords(safeData);
     setMessage('');
@@ -34,10 +30,11 @@ function Search() {
     setSelectedChampion('');
     setChampSummary(summarizeByChampion(safeData));
   } catch (error) {
-    console.error('검색 오류:', error);
+    console.error('검색 실패', error);
     setMessage('검색 실패. 서버 오류 또는 해당 소환사가 없습니다.');
   }
 };
+
 
 
   const summarizeByChampion = (data) => {
