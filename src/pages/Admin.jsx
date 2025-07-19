@@ -68,7 +68,7 @@ export default function Admin() {
         })),
       };
 
-      const res = await axios.post('http://localhost:5000/api/match/save', matchData);
+      const res = await axios.post('https://ziklolgg-server.onrender.com/api/match/save', matchData);
       alert('✅ 저장 완료: ' + res.data.message);
     } catch (err) {
       console.error(err);
