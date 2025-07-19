@@ -28,7 +28,9 @@ function App() {
     <Router>
       {/* 상단바 */}
       <header className="bg-purple-700 text-white font-bold text-lg py-4 px-6 shadow">
+        <Link to="/search" className="hover:underline">
         ZIKLOL.GG - 모임원 전적 시스템
+        </Link>
       </header>
 
       {/* 네비게이션 바 */}
