@@ -17,7 +17,7 @@ function Search() {
   }
 
   try {
-    const res = await axios.get(`/api/match/player/${nickname.trim()}`);
+    const res = await axios.get(`https://ziklolgg-server.onrender.com/api/match/player/${nickname.trim()}`);
     const rawData = res.data;
     const safeData = Array.isArray(rawData) ? rawData : rawData?.data || [];
 
