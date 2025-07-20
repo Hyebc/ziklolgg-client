@@ -7,7 +7,7 @@ const ChampionRanking = () => {
   const [userRankings, setUserRankings] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/ranking/champions')
+    axios.get('https://ziklolgg-server.onrender.com/api/ranking/champions')
       .then(res => {
         if (Array.isArray(res.data)) {
           setChampions(res.data);
@@ -19,7 +19,7 @@ const ChampionRanking = () => {
 
   useEffect(() => {
     if (!selectedChampion) return;
-    axios.get(`/api/ranking/winrate-by-user/${selectedChampion}`)
+    axios.get(`https://ziklolgg-server.onrender.com/api/ranking/winrate-by-user/${selectedChampion}`)
       .then(res => {
         if (Array.isArray(res.data)) {
           setUserRankings(res.data);
