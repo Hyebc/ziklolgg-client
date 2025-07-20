@@ -59,13 +59,13 @@ function App() {
       <main className="p-6">
         <Routes>
           <Route path="/search" element={<Search />} />
+          <Route path="/ranking" element={<ChampionRanking />} />
           <Route
             path="/admin"
             element={isLoggedIn ? <Admin /> : <Navigate to="/login" />}
           />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="*" element={<Navigate to="/search" />} />
-           <Route path="/ranking" element={<ChampionRanking />} />
         </Routes>
       </main>
     </Router>
