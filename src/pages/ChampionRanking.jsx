@@ -11,7 +11,7 @@ const ChampionRanking = () => {
       .then(res => {
         if (Array.isArray(res.data)) {
           setChampions(res.data);
-          setSelectedChampion(res.data[0] || '');
+          if (res.data.length > 0) setSelectedChampion(res.data[0]);
         }
       })
       .catch(err => console.error('❌ 챔피언 목록 에러', err));
