@@ -37,7 +37,7 @@ function App() {
       {/* 네비게이션 바 */}
       <nav className="flex flex-wrap items-center gap-4 px-6 py-3 bg-purple-100 text-purple-700 font-medium text-sm">
         <Link to="/search" className="hover:underline">🔍 검색</Link>
-        <Link to="/ranking" className="text-white hover:underline">📊 승률 랭킹</Link>
+        <Link to="/ranking" className="hover:underline">📊 승률 랭킹</Link>
 
         {isLoggedIn ? (
           <>
