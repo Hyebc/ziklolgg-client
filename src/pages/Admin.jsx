@@ -42,6 +42,15 @@ export default function Admin() {
   p.nickname?.trim() !== '' && p.champion?.trim() !== '';
 
   const submitData = async () => {
+    if (!matchDate.trim()) {
+    alert("❗ 날짜를 입력해주세요.");
+    return;
+    }
+    if (!matchTag.trim()) {
+    alert("❗ 매치 태그를 입력해주세요.");
+    return;
+    }
+
     try {
       const validBlue = teamBlue.filter(isValidPlayer);
       const validRed = teamRed.filter(isValidPlayer);

@@ -3,6 +3,7 @@ import './index.css';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Admin from './pages/Admin';
 import Search from './pages/Search';
+import ChampionRanking from './pages/ChampionRanking'
 import Login from './pages/Login';
 
 function App() {
@@ -36,10 +37,12 @@ function App() {
       {/* 네비게이션 바 */}
       <nav className="flex flex-wrap items-center gap-4 px-6 py-3 bg-purple-100 text-purple-700 font-medium text-sm">
         <Link to="/search" className="hover:underline">🔍 검색</Link>
+        <Link to="/ranking" className="text-white hover:underline">📊 승률 랭킹</Link>
 
         {isLoggedIn ? (
           <>
             <Link to="/admin" className="hover:underline">✏ 입력</Link>
+            
             <button
               onClick={handleLogout}
               className="bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200 transition"
@@ -62,6 +65,7 @@ function App() {
           />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="*" element={<Navigate to="/search" />} />
+           <Route path="/ranking" element={<ChampionRanking />} />
         </Routes>
       </main>
     </Router>
