@@ -57,11 +57,17 @@ export default function ExcelUpload() {
     });
 
     if (res.ok) {
-      alert('✅ 업로드 성공!');
+    alert('✅ 업로드 성공!');
     } else {
-      const err = await res.json();
-      alert(`❌ 업로드 실패: ${err.detail || '알 수 없는 오류'}`);
+    const text = await res.text();
+    try {
+    const err = JSON.parse(text);
+    alert(`❌ 업로드 실패: ${err.detail || '알 수 없는 오류'}`);
+    } catch (e) {
+    alert(`❌ 업로드 실패 (응답 파싱 오류): ${text}`);
     }
+}
+
   };
 
   return (
