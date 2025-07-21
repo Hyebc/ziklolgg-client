@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Admin from './pages/Admin';
+import ExcelUpload from './pages/ExcelUpload';
 import Search from './pages/Search';
 import ChampionRanking from './pages/ChampionRanking'
 import Login from './pages/Login';
@@ -41,7 +42,7 @@ function App() {
 
         {isLoggedIn ? (
           <>
-            <Link to="/admin" className="hover:underline">✏ 입력</Link>
+            <Link to="/admin" className="hover:underline">✏ 입력</Link> <Link to="/upload" className="hover:underline">📤 엑셀 업로드</Link>
             
             <button
               onClick={handleLogout}
@@ -64,6 +65,7 @@ function App() {
             path="/admin"
             element={isLoggedIn ? <Admin /> : <Navigate to="/login" />}
           />
+          <Route path="/upload" element={isLoggedIn ? <ExcelUpload /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="*" element={<Navigate to="/search" />} />
         </Routes>
