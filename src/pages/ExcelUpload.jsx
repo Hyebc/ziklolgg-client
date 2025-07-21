@@ -51,23 +51,30 @@ export default function ExcelUpload() {
     const formData = new FormData();
     formData.append('file', file);
 
-    const res = await fetch('/api/matches/upload-excel', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (res.ok) {
-    alert('✅ 업로드 성공!');
-    } else {
-    const text = await res.text();
     try {
-    const err = JSON.parse(text);
-    alert(`❌ 업로드 실패: ${err.detail || '알 수 없는 오류'}`);
-    } catch (e) {
-    alert(`❌ 업로드 실패 (응답 파싱 오류): ${text}`);
-    }
-}
+      const res = await fetch('/api/matches/upload-excel', {
+        method: 'POST',
+        body: formData,
+      });
 
+      if (res.ok) {
+        alert('✅ 업로드 성공!');
+      } else {
+        const text = await res.text();
+        if (!text) {
+          alert('❌ 업로드 실패: 서버 응답 없음');
+        } else {
+          try {
+            const err = JSON.parse(text);
+            alert(`❌ 업로드 실패: ${err.detail || err.error || '알 수 없는 오류'}`);
+          } catch (e) {
+            alert(`❌ 업로드 실패 (응답 파싱 오류): ${text}`);
+          }
+        }
+      }
+    } catch (err) {
+      alert(`❌ 업로드 중 네트워크 오류: ${err.message}`);
+    }
   };
 
   return (
