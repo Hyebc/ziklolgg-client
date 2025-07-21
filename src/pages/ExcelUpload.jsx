@@ -6,6 +6,31 @@ export default function ExcelUpload() {
   const [file, setFile] = useState(null);
   const [previewData, setPreviewData] = useState([]);
 
+  const extractValidRows = (sheet) => {
+    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+    const startIndex = rows.findIndex(row => row.includes("대회명"));
+    if (startIndex === -1) return [];
+
+    const headers = rows[startIndex];
+    const dataRows = rows.slice(startIndex + 1);
+
+    return dataRows.map((row) => {
+      const obj = {};
+      headers.forEach((key, idx) => {
+        obj[key] = row[idx];
+      });
+
+      return {
+        대회명: obj['대회명'],
+        챔피언: obj['챔피언'],
+        결과: obj['결과'],
+        K: Number(obj['K']).toFixed(2),
+        D: Number(obj['D']).toFixed(2),
+        A: Number(obj['A']).toFixed(2),
+      };
+    }).filter(row => row['챔피언']);
+  };
+
   const handleFile = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -15,8 +40,8 @@ export default function ExcelUpload() {
       const data = new Uint8Array(event.target.result);
       const workbook = XLSX.read(data, { type: 'array' });
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const json = XLSX.utils.sheet_to_json(sheet);
-      setPreviewData(json);
+      const cleaned = extractValidRows(sheet);
+      setPreviewData(cleaned);
     };
     reader.readAsArrayBuffer(selectedFile);
   };
